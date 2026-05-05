@@ -1,6 +1,6 @@
 import type { BTUFormData, BTUResult } from '@/types'
 
-export const WHATSAPP_NUMBER = '5545999990000'
+export const WHATSAPP_NUMBER = '5545991166730'
 
 const SOL_LABELS: Record<string, string> = {
   baixo: 'Baixa (sombra/norte)',

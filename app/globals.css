@@ -16,6 +16,27 @@ body {
   color: #1A1A2E;
 }
 
+/* Brand-styled scrollbar */
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+::-webkit-scrollbar-track {
+  background: #EEF0FC;
+}
+::-webkit-scrollbar-thumb {
+  background: #2E3192;
+  border-radius: 8px;
+  border: 2px solid #EEF0FC;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #1C1F6E;
+}
+html {
+  scrollbar-color: #2E3192 #EEF0FC;
+  scrollbar-width: thin;
+}
+
 /* Hide scrollbar on testimonials */
 .no-scrollbar::-webkit-scrollbar {
   display: none;

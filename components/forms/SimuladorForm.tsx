@@ -29,6 +29,8 @@ const SOL_OPTIONS = [
 
 const inputClass =
   'w-full px-3.5 py-3 font-sans text-[14px] border-[1.5px] border-gray-300 rounded-lg outline-none text-[#1A1A2E] bg-white transition-colors focus:border-brand'
+const selectClass =
+  "w-full pl-3.5 pr-10 py-3 font-sans text-[14px] border-[1.5px] border-gray-300 rounded-lg outline-none text-[#1A1A2E] bg-white transition-colors focus:border-brand appearance-none cursor-pointer bg-no-repeat bg-[right_12px_center] bg-[length:18px_18px] bg-[url(\"data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%232E3192' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'/%3e%3c/svg%3e\")]"
 const labelClass = 'block text-[13px] font-semibold text-gray-700 mb-1.5'
 
 export function SimuladorForm() {
@@ -119,7 +121,7 @@ export function SimuladorForm() {
             {/* Solar */}
             <div>
               <label className={labelClass}>Incidência solar</label>
-              <select {...register('sol')} className={`${inputClass} cursor-pointer`}>
+              <select {...register('sol')} className={selectClass}>
                 {SOL_OPTIONS.map((o) => (
                   <option key={o.value} value={o.value}>{o.label}</option>
                 ))}

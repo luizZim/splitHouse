@@ -67,7 +67,7 @@ export function HeroSection() {
           <motion.div
             variants={fadeUp}
             transition={{ duration: 0.4 }}
-            className="flex gap-3.5 flex-wrap mb-13"
+            className="flex gap-3.5 flex-wrap mb-16"
           >
             <WhatsAppButton size="md">Falar no WhatsApp</WhatsAppButton>
 

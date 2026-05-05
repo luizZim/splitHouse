@@ -41,14 +41,6 @@ export const PRODUCT_CATEGORIES: ProductCategory[] = [
     accent: '#2E3192',
     desc: '36.000–60.000 BTU · Alta capacidade',
   },
-  {
-    id: 'vrf',
-    label: 'VRF',
-    badge: '',
-    bg: 'from-[#F8F9FB] to-[#E5E7EB]',
-    accent: '#6B7280',
-    desc: 'A partir de 8TR · Múltiplos ambientes',
-  },
 ]
 
 export const PRODUCTS: Record<string, Product[]> = {
@@ -80,10 +72,5 @@ export const PRODUCTS: Record<string, Product[]> = {
     { id: 'sp1', name: 'Splitão 36000', brand: 'Electrolux', btu: '36.000', type: 'Comercial/Industrial', use: 'Oficinas e pequenos galpões', energy: 'B', categoryId: 'splitao' },
     { id: 'sp2', name: 'Splitão 48000', brand: 'Samsung', btu: '48.000', type: 'Industrial', use: 'Galpões e fábricas', energy: 'B', categoryId: 'splitao' },
     { id: 'sp3', name: 'Splitão 60000', brand: 'LG', btu: '60.000', type: 'Industrial', use: 'Grandes instalações industriais', energy: 'B', categoryId: 'splitao' },
-  ],
-  'vrf': [
-    { id: 'vrf1', name: 'Sistema VRF 8TR', brand: 'Carrier', btu: '96.000', type: 'Comercial/Industrial', use: 'Edifícios comerciais e hotéis', energy: 'A', categoryId: 'vrf' },
-    { id: 'vrf2', name: 'Sistema VRF 12TR', brand: 'Daikin', btu: '144.000', type: 'Comercial/Industrial', use: 'Grandes edifícios e centros comerciais', energy: 'A', categoryId: 'vrf' },
-    { id: 'vrf3', name: 'Sistema VRF 16TR', brand: 'Mitsubishi', btu: '192.000', type: 'Industrial', use: 'Complexos industriais e hospitalares', energy: 'A', categoryId: 'vrf' },
   ],
 }

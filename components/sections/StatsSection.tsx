@@ -27,7 +27,7 @@ function StatItem({ stat, last }: { stat: typeof STATS[0]; last: boolean }) {
 
 export function StatsSection() {
   return (
-    <section className="bg-[#13165C] py-18">
+    <section className="bg-[#13165C] py-20">
       <div className="container mx-auto px-6">
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-0.5">
           {STATS.map((s, i) => (

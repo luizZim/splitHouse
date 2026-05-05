@@ -10,6 +10,7 @@ import { openWhatsApp } from '@/lib/whatsapp'
 import { cn } from '@/lib/utils/cn'
 
 const NAV_ITEMS = [
+  { label: 'Home', href: '/' },
   { label: 'Serviços', href: '/servicos' },
   { label: 'Produtos', href: '/produtos' },
   { label: 'Simulador', href: '/#simulador' },
@@ -37,14 +38,14 @@ export function Navbar() {
     >
       <div className="container mx-auto px-6 flex items-center justify-between">
         {/* Logo */}
-        <Link href="/" className="flex items-center">
+        <Link href="/" className="h-full flex items-center justify-center">
           <Image
             src="/logo-only.png"
             alt="Split House"
             width={64}
             height={64}
             className={cn(
-              'h-16 w-auto object-contain transition-all duration-300',
+              'h-16 w-auto object-contain translate-y-[2px] transition-all duration-300',
               isDark ? 'brightness-[10]' : ''
             )}
             priority

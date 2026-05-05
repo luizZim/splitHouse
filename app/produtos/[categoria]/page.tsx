@@ -49,7 +49,7 @@ export default async function CategoriaPage({ params }: Props) {
                 className="bg-white rounded-xl p-5 md:p-6 shadow-[0_2px_12px_rgba(46,49,146,.08)] flex items-center gap-5 flex-wrap"
               >
                 <div
-                  className={`w-18 h-18 rounded-xl bg-gradient-to-br ${cat.bg} flex items-center justify-center flex-shrink-0`}
+                  className={`w-20 h-20 rounded-xl bg-gradient-to-br ${cat.bg} flex items-center justify-center flex-shrink-0`}
                 >
                   <ACIllustration color={cat.accent} size={40} />
                 </div>

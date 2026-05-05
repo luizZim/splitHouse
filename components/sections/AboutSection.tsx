@@ -75,7 +75,7 @@ export function AboutSection() {
             </div>
             <Link
               href="/sobre"
-              className="inline-flex items-center gap-2 bg-brand text-white text-[14px] font-semibold rounded-lg px-5.5 py-3 hover:bg-brand-dark transition-colors"
+              className="inline-flex items-center gap-2 bg-brand text-white text-[14px] font-semibold rounded-lg px-6 py-3 hover:bg-brand-dark transition-colors"
             >
               Conheça nossa história <ArrowRight size={16} />
             </Link>

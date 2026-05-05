@@ -12,7 +12,7 @@ const CONTACT_INFO = [
   { label: 'Localização', value: 'Cascavel, Paraná, Brasil' },
   { label: 'Atendimento', value: 'Cascavel e região do Paraná' },
   { label: 'Horário', value: 'Seg – Sáb: 8h às 18h' },
-  { label: 'Telefone', value: '(45) 9 9999-0000' },
+  { label: 'Telefone', value: '(45) 99116-6730' },
 ]
 
 export default function ContatoPage() {

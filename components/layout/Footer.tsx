@@ -10,7 +10,7 @@ const PRODUCT_LINKS = ['Split Hi-Wall', 'Mini VRF', 'Piso Teto', 'Cassete', 'Spl
 
 export function Footer() {
   return (
-    <footer className="bg-brand-darker pt-18 pb-8">
+    <footer className="bg-brand-darker pt-20 pb-8">
       <div className="container mx-auto px-6">
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-[2.2fr_1fr_1fr_1fr] gap-12 mb-12">
           {/* Brand */}
@@ -62,7 +62,7 @@ export function Footer() {
             {[
               { icon: '📍', text: 'Cascavel, Paraná, Brasil' },
               { icon: '⏰', text: 'Seg – Sáb: 8h às 18h' },
-              { icon: '📞', text: '(45) 9 9999-0000' },
+              { icon: '📞', text: '(45) 99116-6730' },
             ].map((c) => (
               <div key={c.text} className="flex items-start gap-2 text-[13px] text-white/55 mb-2.5">
                 <span className="text-xs mt-0.5">{c.icon}</span>
@@ -92,7 +92,7 @@ function FooterWhatsAppBtn() {
       onClick={() => openWhatsApp()}
       className="inline-flex items-center gap-2 bg-whatsapp hover:bg-whatsapp-dark text-white text-[13px] font-semibold rounded-lg px-4 py-2.5 transition-colors"
     >
-      <MessageCircle size={14} /> (45) 9 9999-0000
+      <MessageCircle size={14} /> (45) 99116-6730
     </button>
   )
 }
