@@ -6,7 +6,7 @@ export function MainContent({ children }: { children: React.ReactNode }) {
   const pathname = usePathname()
   const isHome = pathname === '/'
   return (
-    <main className={isHome ? '' : 'pt-[72px]'}>
+    <main className={isHome ? '' : 'pt-[88px]'}>
       {children}
     </main>
   )

@@ -3,7 +3,7 @@ import { WhatsAppButton } from '@/components/ui/Button'
 
 export function CTASection() {
   return (
-    <section className="bg-gradient-to-br from-brand-dark via-brand to-[#3d52c4] py-24 relative overflow-hidden">
+    <section className="bg-gradient-to-br from-brand-dark via-brand to-[#3d52c4] py-24 relative overflow-hidden" id="contato">
       <div
         className="absolute inset-0 pointer-events-none"
         style={{
@@ -28,6 +28,12 @@ export function CTASection() {
             Simular meu BTU
           </Link>
         </div>
+        <Link
+          href="/contato"
+          className="inline-block mt-6 text-[13px] font-medium text-white/55 hover:text-white/85 underline underline-offset-4 transition-colors duration-200"
+        >
+          Ver formulário, endereço e horários completos
+        </Link>
       </div>
     </section>
   )

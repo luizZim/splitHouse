@@ -4,7 +4,7 @@ import { useCountUp } from '@/hooks/useCountUp'
 
 const STATS = [
   { target: 13, suffix: '+', label: 'Anos de experiência' },
-  { target: 500, suffix: '+', label: 'Serviços realizados' },
+  { target: 7000, suffix: '+', label: 'Serviços realizados' },
   { target: 6, suffix: '', label: 'Tipos de equipamentos' },
   { target: 100, suffix: '%', label: 'Atendimento direto' },
 ]

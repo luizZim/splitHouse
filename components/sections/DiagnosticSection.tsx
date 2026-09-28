@@ -2,16 +2,18 @@
 
 import { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { CheckCircle } from 'lucide-react'
+import { CheckCircle, Snowflake, Droplets, Volume2, type LucideIcon } from 'lucide-react'
 import { SectionHeader } from '@/components/ui/SectionHeader'
+import { IconBadge } from '@/components/ui/IconBadge'
 import { WhatsAppButton } from '@/components/ui/Button'
+import { fadeUp } from '@/lib/motion'
 import { buildServiceMessage } from '@/lib/whatsapp'
 
-const PROBLEMS = [
+const PROBLEMS: { id: string; label: string; icon: LucideIcon; causes: string[] }[] = [
   {
     id: 'gelando',
     label: 'Não está gelando',
-    icon: '🧊',
+    icon: Snowflake,
     causes: [
       'Gás refrigerante baixo ou vazio — precisa de recarga',
       'Filtros sujos bloqueando a circulação de ar',
@@ -22,7 +24,7 @@ const PROBLEMS = [
   {
     id: 'agua',
     label: 'Vazando água',
-    icon: '💧',
+    icon: Droplets,
     causes: [
       'Dreno de condensado entupido ou dobrado',
       'Filtros muito sujos causando congelamento',
@@ -33,7 +35,7 @@ const PROBLEMS = [
   {
     id: 'barulho',
     label: 'Fazendo barulho',
-    icon: '🔊',
+    icon: Volume2,
     causes: [
       'Suporte de fixação frouxo ou vibrando',
       'Peças internas soltas (tampas, parafusos)',
@@ -62,13 +64,14 @@ export function DiagnosticSection() {
               <button
                 key={p.id}
                 onClick={() => setSelected(selected === p.id ? null : p.id)}
-                className={`flex items-center gap-2.5 px-6 py-3.5 rounded-full border-2 text-[14px] font-semibold transition-all duration-200 font-sans ${
+                className={`group flex items-center gap-3 pl-2.5 pr-5 py-2.5 rounded-full border-2 text-[14px] font-semibold transition-all duration-200 font-sans ${
                   selected === p.id
                     ? 'border-brand bg-[#EEF0FC] text-brand shadow-[0_4px_16px_rgba(46,49,146,.12)]'
                     : 'border-gray-300 bg-white text-gray-500 hover:border-brand/40'
                 }`}
               >
-                <span className="text-xl">{p.icon}</span> {p.label}
+                <IconBadge icon={p.icon} size="sm" active={selected === p.id} />
+                {p.label}
               </button>
             ))}
           </div>
@@ -77,15 +80,20 @@ export function DiagnosticSection() {
             {sel && (
               <motion.div
                 key={sel.id}
-                initial={{ opacity: 0, y: 12 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -8 }}
-                transition={{ duration: 0.25 }}
+                variants={fadeUp}
+                initial="hidden"
+                animate="show"
+                exit={{ opacity: 0, y: -8, transition: { duration: 0.2 } }}
                 className="bg-white rounded-2xl p-7 shadow-[0_4px_24px_rgba(46,49,146,.10)] border-[1.5px] border-[#EEF0FC]"
               >
-                <div className="text-[15px] font-bold text-[#1A1A2E] mb-4 flex items-center gap-2">
-                  <span className="text-[22px]">{sel.icon}</span>
-                  Possíveis causas — {sel.label}
+                <div className="flex items-center gap-3 mb-5">
+                  <IconBadge icon={sel.icon} active />
+                  <div>
+                    <div className="text-[11px] font-bold uppercase tracking-[0.1em] text-accent mb-0.5">
+                      Possíveis causas
+                    </div>
+                    <div className="text-[15px] font-bold text-[#1A1A2E]">{sel.label}</div>
+                  </div>
                 </div>
                 <div className="flex flex-col gap-2.5 mb-6">
                   {sel.causes.map((c, i) => (
