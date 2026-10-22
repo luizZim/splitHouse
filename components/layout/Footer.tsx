@@ -1,19 +1,20 @@
-'use client'
-
 import Link from 'next/link'
 import Image from 'next/image'
-import { MessageCircle } from 'lucide-react'
-import { openWhatsApp } from '@/lib/whatsapp'
 
 const SERVICES_LINKS = ['Instalação', 'Manutenção', 'Revenda', 'Mini VRF']
-const PRODUCT_LINKS = ['Split Hi-Wall', 'Mini VRF', 'Piso Teto', 'Cassete', 'Splitão']
+const PRODUCT_LINKS = [
+  { label: 'Split Hi-Wall', href: '/produtos/hi-wall' },
+  { label: 'Piso Teto', href: '/produtos/piso-teto' },
+  { label: 'Cassete', href: '/produtos/cassete' },
+  { label: 'Mini VRF', href: '/produtos/mini-vrf' },
+  { label: 'Splitão', href: '/produtos/splitao' },
+]
 
 export function Footer() {
   return (
     <footer className="bg-brand-darker pt-20 pb-8">
       <div className="container mx-auto px-6">
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-[2.2fr_1fr_1fr_1fr] gap-12 mb-12">
-          {/* Brand */}
           <div>
             <Image
               src="/logo-full.png"
@@ -22,41 +23,29 @@ export function Footer() {
               height={80}
               className="h-20 w-auto object-contain mb-2.5 brightness-[10]"
             />
-            <p className="text-sm text-white/50 leading-relaxed max-w-[260px] mb-5">
+            <p className="text-sm text-white/50 leading-relaxed max-w-[260px]">
               Mais de 13 anos instalando e mantendo sistemas de ar condicionado em Cascavel e região do Paraná.
             </p>
-            <FooterWhatsAppBtn />
           </div>
 
-          {/* Services */}
           <div>
             <p className="text-[11px] font-bold uppercase tracking-[0.1em] text-white/35 mb-4">Serviços</p>
             {SERVICES_LINKS.map((s) => (
-              <Link
-                key={s}
-                href="/servicos"
-                className="block text-[13px] text-white/55 mb-2.5 hover:text-accent transition-colors"
-              >
+              <Link key={s} href="/#servicos" className="block text-[13px] text-white/55 mb-2.5 hover:text-accent transition-colors">
                 {s}
               </Link>
             ))}
           </div>
 
-          {/* Products */}
           <div>
             <p className="text-[11px] font-bold uppercase tracking-[0.1em] text-white/35 mb-4">Produtos</p>
             {PRODUCT_LINKS.map((p) => (
-              <Link
-                key={p}
-                href="/produtos"
-                className="block text-[13px] text-white/55 mb-2.5 hover:text-accent transition-colors"
-              >
-                {p}
+              <Link key={p.href} href={p.href} className="block text-[13px] text-white/55 mb-2.5 hover:text-accent transition-colors">
+                {p.label}
               </Link>
             ))}
           </div>
 
-          {/* Contact */}
           <div>
             <p className="text-[11px] font-bold uppercase tracking-[0.1em] text-white/35 mb-4">Contato</p>
             {[
@@ -83,16 +72,5 @@ export function Footer() {
         </div>
       </div>
     </footer>
-  )
-}
-
-function FooterWhatsAppBtn() {
-  return (
-    <button
-      onClick={() => openWhatsApp()}
-      className="inline-flex items-center gap-2 bg-whatsapp hover:bg-whatsapp-dark text-white text-[13px] font-semibold rounded-lg px-4 py-2.5 transition-colors"
-    >
-      <MessageCircle size={14} /> (45) 99116-6730
-    </button>
   )
 }

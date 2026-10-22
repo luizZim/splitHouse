@@ -1,12 +1,11 @@
 'use client'
 
 import Image from 'next/image'
-import Link from 'next/link'
 import dynamic from 'next/dynamic'
 import { motion } from 'framer-motion'
 import { useInView } from 'framer-motion'
 import { useRef } from 'react'
-import { CheckCircle, ArrowRight } from 'lucide-react'
+import { CheckCircle } from 'lucide-react'
 
 const SnowCanvas = dynamic(
   () => import('./hero/SnowCanvas').then((m) => m.SnowCanvas),
@@ -74,7 +73,7 @@ export function AboutSection() {
             <p className="text-[15px] text-white/70 leading-[1.8] mb-6">
               Com mais de 13 anos de experiência em climatização, a Split House nasceu do compromisso com a qualidade e o atendimento direto. Não há intermediários — você fala, negocia e é atendido pelo próprio profissional.
             </p>
-            <div className="flex flex-col gap-2.5 mb-7">
+            <div className="flex flex-col gap-2.5">
               {HIGHLIGHTS.map((h) => (
                 <div key={h} className="flex items-center gap-2.5">
                   <div className="w-[22px] h-[22px] rounded-full bg-white/10 border border-white/15 flex items-center justify-center flex-shrink-0">
@@ -84,12 +83,6 @@ export function AboutSection() {
                 </div>
               ))}
             </div>
-            <Link
-              href="/sobre"
-              className="inline-flex items-center gap-2 bg-accent text-white text-[14px] font-semibold rounded-lg px-6 py-3 hover:bg-accent-dark transition-colors"
-            >
-              Conheça nossa história <ArrowRight size={16} />
-            </Link>
           </motion.div>
         </div>
       </div>
