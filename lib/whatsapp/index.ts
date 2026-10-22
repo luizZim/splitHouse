@@ -1,14 +1,9 @@
 import type { BTUFormData, BTUResult } from '@/types'
 import { formatBtu } from '@/lib/catalog/select'
+import { HEAT_OPTIONS, SUN_OPTIONS } from '@/lib/calculations/btu'
 import { PROPERTY_OPTIONS, ROOM_OPTIONS, labelOf, type InstallInfo } from '@/lib/catalog/install'
 
 export const WHATSAPP_NUMBER = '5545991166730'
-
-const SOL_LABELS: Record<string, string> = {
-  baixo: 'Baixa (sombra/norte)',
-  medio: 'Média (meia-sombra)',
-  alto: 'Alta (sol direto)',
-}
 
 export function openWhatsApp(message?: string) {
   const text = message || 'Olá! Vim pelo site da Split House e gostaria de um orçamento.'
@@ -16,26 +11,29 @@ export function openWhatsApp(message?: string) {
   window.open(url, '_blank', 'noopener,noreferrer')
 }
 
-export function buildSimuladorMessage(form: BTUFormData, result: BTUResult): string {
-  return `Olá, fiz uma simulação no site e gostaria de um orçamento.
-
-Ambiente:
-- Área: ${form.area} m²
-- Altura do teto: ${form.altura} m
-- Pessoas: ${form.pessoas}
-- Incidência solar: ${SOL_LABELS[form.sol] ?? form.sol}
-- Equipamentos eletrônicos: ${form.equipamentos}
-
-Resultado sugerido:
-${result.btu.toLocaleString('pt-BR')} BTUs (faixa: ${result.range[0].toLocaleString('pt-BR')}–${result.range[1].toLocaleString('pt-BR')})
-
-Pode me ajudar com um orçamento?`
+function formatNumber(n: number, digits = 1): string {
+  return n.toLocaleString('pt-BR', { maximumFractionDigits: digits })
 }
 
-export function buildContatoMessage(nome: string, telefone: string, mensagem: string): string {
-  return `Olá! Meu nome é ${nome}${telefone ? `, telefone ${telefone}` : ''}.
+export function buildSimuladorMessage(form: BTUFormData, result: BTUResult): string {
+  const sun = SUN_OPTIONS.find((o) => o.value === form.sol)
+  const heat = HEAT_OPTIONS.filter((h) => form.calor.includes(h.value)).map((h) => h.label)
 
-${mensagem}`
+  const lines = [
+    'Olá! Fiz a simulação de BTU no site e gostaria de um orçamento.',
+    '',
+    '*Ambiente*',
+    `• Área: ${formatNumber(form.area)} m² · pé-direito ${formatNumber(form.altura)} m`,
+    `• Sol: ${sun ? sun.label : 'Não recebe sol'}`,
+  ]
+  if (heat.length) lines.push(`• Aquece o ambiente: ${heat.join(', ')}`)
+  lines.push(
+    '',
+    result.btu === null
+      ? '*Resultado*: acima de 60.000 BTU/h — preciso de uma avaliação técnica'
+      : `*Resultado*: ${formatBtu(result.btu)} BTU/h (área efetiva considerada: ${formatNumber(result.effectiveArea)} m²)`
+  )
+  return lines.join('\n')
 }
 
 export function buildServiceMessage(serviceName: string): string {

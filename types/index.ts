@@ -15,24 +15,22 @@ export interface Testimonial {
   text: string
 }
 
+export type SunExposure = 'nao' | 'manha' | 'tarde' | 'dia-todo'
+export type HeatSource = 'fogao' | 'churrasqueira' | 'eletronicos' | 'vidros' | 'pessoas'
+
 export interface BTUFormData {
   area: number
   altura: number
-  pessoas: number
-  sol: 'baixo' | 'medio' | 'alto'
-  equipamentos: number
+  sol: SunExposure
+  calor: HeatSource[]
 }
 
 export interface BTUResult {
-  btu: number
-  range: [number, number]
-  raw: number
-}
-
-export interface ContactFormData {
-  nome: string
-  telefone: string
-  mensagem: string
+  /** null quando o ambiente passa de 60.000 BTU */
+  btu: number | null
+  effectiveArea: number
+  adjustments: { label: string; pct: number }[]
+  exceedsMax: boolean
 }
 
 export interface NavItem {

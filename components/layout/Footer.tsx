@@ -1,5 +1,6 @@
 import Link from 'next/link'
 import Image from 'next/image'
+import { SocialLinks } from '@/components/ui/SocialLinks'
 
 const SERVICES_LINKS = ['Instalação', 'Manutenção', 'Revenda', 'Mini VRF']
 const PRODUCT_LINKS = [
@@ -23,9 +24,10 @@ export function Footer() {
               height={80}
               className="h-20 w-auto object-contain mb-2.5 brightness-[10]"
             />
-            <p className="text-sm text-white/50 leading-relaxed max-w-[260px]">
+            <p className="text-sm text-white/50 leading-relaxed max-w-[260px] mb-5">
               Mais de 13 anos instalando e mantendo sistemas de ar condicionado em Cascavel e região do Paraná.
             </p>
+            <SocialLinks />
           </div>
 
           <div>

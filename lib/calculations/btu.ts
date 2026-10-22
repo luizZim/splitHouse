@@ -1,39 +1,50 @@
-import type { BTUFormData, BTUResult } from '@/types'
+import type { BTUFormData, BTUResult, HeatSource, SunExposure } from '@/types'
+import { areaFor } from '@/lib/catalog/select'
 
-const BTU_STANDARDS = [7500, 9000, 12000, 18000, 24000, 30000, 36000, 48000, 60000]
+/** Capacidades comerciais, da menor para a maior. */
+const CAPACITIES = [9000, 12000, 18000, 24000, 30000, 36000, 48000, 60000]
 
-const HEIGHT_FACTOR: [number, number][] = [
-  [2.4, 0.9],
-  [2.8, 1.0],
-  [3.2, 1.1],
-  [Infinity, 1.2],
+/** Margem técnica sobre a área máxima indicada pelas marcas. */
+const TOLERANCE = 1.25
+
+/** Teto da soma dos adicionais percentuais. */
+const MAX_EXTRA = 0.5
+
+export const SUN_OPTIONS: { value: Exclude<SunExposure, 'nao'>; label: string; pct: number }[] = [
+  { value: 'manha', label: 'Sol de manhã', pct: 5 },
+  { value: 'tarde', label: 'Sol à tarde', pct: 10 },
+  { value: 'dia-todo', label: 'Sol o dia todo', pct: 15 },
 ]
 
-const SOLAR_FACTOR: Record<BTUFormData['sol'], number> = {
-  baixo: 1.0,
-  medio: 1.1,
-  alto: 1.2,
+export const HEAT_OPTIONS: { value: HeatSource; label: string; pct: number }[] = [
+  { value: 'fogao', label: 'Fogão / forno', pct: 15 },
+  { value: 'churrasqueira', label: 'Churrasqueira', pct: 20 },
+  { value: 'eletronicos', label: 'Muitos eletrônicos (computadores, servidores)', pct: 10 },
+  { value: 'vidros', label: 'Muitos vidros / portas de vidro com sol', pct: 10 },
+  { value: 'pessoas', label: 'Muitas pessoas ao mesmo tempo (loja, escritório)', pct: 10 },
+]
+
+function heightPct(altura: number): number {
+  if (altura <= 3.0) return 0
+  if (altura <= 3.5) return 15
+  return 30
 }
 
 export function calcBTU(form: BTUFormData): BTUResult {
-  let base = form.area * 600
+  const adjustments: BTUResult['adjustments'] = []
 
-  const hf = HEIGHT_FACTOR.find(([max]) => form.altura <= max)?.[1] ?? 1.2
-  base *= hf
+  const sun = SUN_OPTIONS.find((o) => o.value === form.sol)
+  if (sun) adjustments.push({ label: sun.label, pct: sun.pct })
+  for (const h of HEAT_OPTIONS) {
+    if (form.calor.includes(h.value)) adjustments.push({ label: h.label, pct: h.pct })
+  }
+  const extra = Math.min(MAX_EXTRA, adjustments.reduce((s, a) => s + a.pct, 0) / 100)
 
-  base *= SOLAR_FACTOR[form.sol]
+  const hPct = heightPct(form.altura)
+  if (hPct) adjustments.push({ label: 'Pé-direito alto', pct: hPct })
 
-  base += Math.max(0, form.pessoas - 1) * 600
+  const effectiveArea = form.area * (1 + hPct / 100) * (1 + extra)
+  const btu = CAPACITIES.find((cap) => effectiveArea < areaFor(cap)[1] * TOLERANCE) ?? null
 
-  base += form.equipamentos * 600
-
-  const raw = Math.round(base)
-  const ideal = BTU_STANDARDS.find((b) => b >= raw) ?? 60000
-  const idx = BTU_STANDARDS.indexOf(ideal)
-  const range: [number, number] = [
-    ideal,
-    BTU_STANDARDS[Math.min(idx + 1, BTU_STANDARDS.length - 1)],
-  ]
-
-  return { btu: ideal, range, raw }
+  return { btu, effectiveArea, adjustments, exceedsMax: btu === null }
 }

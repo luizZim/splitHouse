@@ -6,6 +6,7 @@ import dynamic from 'next/dynamic'
 import { motion } from 'framer-motion'
 import { MapPin, CheckCircle, ChevronRight } from 'lucide-react'
 import { WhatsAppButton } from '@/components/ui/Button'
+import { SocialLinks } from '@/components/ui/SocialLinks'
 
 const SnowCanvas = dynamic(
   () => import('./hero/SnowCanvas').then((m) => m.SnowCanvas),
@@ -88,7 +89,7 @@ export function HeroSection() {
             </Link>
           </motion.div>
 
-          <motion.div variants={fadeUp} transition={{ duration: 0.8, delay: 0.6 }} className="flex gap-9">
+          <motion.div variants={fadeUp} transition={{ duration: 0.8, delay: 0.6 }} className="flex gap-9 mb-10">
             {STATS.map((s) => (
               <div key={s.label}>
                 <div className="text-[2rem] font-extrabold text-white tracking-tight leading-none">
@@ -98,6 +99,15 @@ export function HeroSection() {
                 <div className="text-xs text-white/55 mt-0.5">{s.label}</div>
               </div>
             ))}
+          </motion.div>
+
+          <motion.div
+            variants={fadeUp}
+            transition={{ duration: 0.8, delay: 0.8 }}
+            className="flex items-center gap-3"
+          >
+            <span className="text-xs text-white/55">Siga a Split House</span>
+            <SocialLinks />
           </motion.div>
         </motion.div>
 
