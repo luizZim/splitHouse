@@ -4,7 +4,8 @@ import Image from 'next/image'
 import Link from 'next/link'
 import dynamic from 'next/dynamic'
 import { motion } from 'framer-motion'
-import { MapPin, CheckCircle, ChevronRight } from 'lucide-react'
+import { MapPin, CheckCircle, ChevronRight, Award, UserCheck, type LucideIcon } from 'lucide-react'
+import { COMPANY_STATS } from '@/lib/site'
 import { WhatsAppButton } from '@/components/ui/Button'
 import { SocialLinks } from '@/components/ui/SocialLinks'
 
@@ -14,9 +15,15 @@ const SnowCanvas = dynamic(
 )
 
 const STATS = [
-  { num: '13', suffix: '+', label: 'Anos de experiência' },
-  { num: '500', suffix: '+', label: 'Clientes atendidos' },
-  { num: '100', suffix: '%', label: 'Atendimento direto' },
+  { num: String(COMPANY_STATS.years), suffix: '+', label: 'Anos de experiência' },
+  { num: COMPANY_STATS.clients.toLocaleString('pt-BR'), suffix: '+', label: 'Clientes atendidos' },
+  { num: COMPANY_STATS.services.toLocaleString('pt-BR'), suffix: '+', label: 'Serviços realizados' },
+]
+
+const HIGHLIGHTS: { icon: LucideIcon; text: string }[] = [
+  { icon: MapPin, text: 'Atendimento em Cascavel e região' },
+  { icon: Award, text: `Mais de ${COMPANY_STATS.years} anos de experiência` },
+  { icon: UserCheck, text: 'Você fala direto com quem executa o serviço' },
 ]
 
 const fadeUp = {
@@ -65,13 +72,20 @@ export function HeroSection() {
             <span className="text-accent">Sem Complicação</span>
           </motion.h1>
 
-          <motion.p
+          <motion.ul
             variants={fadeUp}
             transition={{ duration: 0.8, delay: 0.2 }}
-            className="text-[1.1rem] text-white/70 leading-relaxed mb-9 max-w-[480px]"
+            className="flex flex-col gap-2.5 mb-9"
           >
-            Atendimento em Cascavel e região • +13 anos de experiência • Você fala direto com quem executa o serviço.
-          </motion.p>
+            {HIGHLIGHTS.map(({ icon: Icon, text }) => (
+              <li key={text} className="flex items-center gap-3 text-[1.05rem] text-white/75">
+                <span className="w-7 h-7 rounded-full bg-accent/15 border border-accent/30 flex items-center justify-center flex-shrink-0">
+                  <Icon size={14} className="text-accent" />
+                </span>
+                {text}
+              </li>
+            ))}
+          </motion.ul>
 
           <motion.div
             variants={fadeUp}

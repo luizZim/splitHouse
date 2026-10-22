@@ -8,6 +8,7 @@ import { SectionHeader } from '@/components/ui/SectionHeader'
 import { ACIllustration } from '@/components/ui/ACIllustration'
 import { Reveal } from '@/components/ui/Reveal'
 import { BrandLogo } from '@/components/catalog/BrandLogo'
+import { BrandMarquee } from '@/components/catalog/BrandMarquee'
 import { fadeUp } from '@/lib/motion'
 import { rememberHomeScroll } from '@/lib/navigation/homeReturn'
 import { capacitiesFor, formatBtu } from '@/lib/catalog/select'
@@ -75,6 +76,7 @@ export function ProductsSection({ types, brands }: { types: ProductType[]; brand
           title="Equipamentos para cada necessidade"
           subtitle="Escolha o tipo, a capacidade e a marca — e peça seu orçamento direto no WhatsApp."
         />
+        <BrandMarquee brands={brands} />
         <Reveal className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
           {types.map((t) => (
             <TypeCard key={t.id} type={t} brands={brands} />

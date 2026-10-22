@@ -37,7 +37,22 @@ html {
   scrollbar-width: thin;
 }
 
-/* Hide scrollbar on testimonials */
+/* Faixa de marcas em loop: o conteúdo é duplicado e desliza metade da largura */
+@keyframes marquee {
+  to {
+    transform: translateX(-50%);
+  }
+}
+.animate-marquee {
+  animation: marquee 40s linear infinite;
+}
+@media (prefers-reduced-motion: reduce) {
+  .animate-marquee {
+    animation: none;
+  }
+}
+
+/* Hide scrollbar */
 .no-scrollbar::-webkit-scrollbar {
   display: none;
 }

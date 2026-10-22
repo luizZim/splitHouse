@@ -1,11 +1,12 @@
 import Link from 'next/link'
 import { WhatsAppButton } from '@/components/ui/Button'
 import { SocialLinks } from '@/components/ui/SocialLinks'
+import { BUSINESS_HOURS } from '@/lib/site'
 
 const CONTACT_INFO = [
   { label: 'Localização', value: 'Cascavel, Paraná, Brasil' },
   { label: 'Atendimento', value: 'Cascavel e região do Paraná' },
-  { label: 'Horário', value: 'Seg – Sáb: 8h às 18h' },
+  { label: 'Horário', value: BUSINESS_HOURS },
   { label: 'Telefone', value: '(45) 99116-6730' },
 ]
 

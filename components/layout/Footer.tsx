@@ -1,6 +1,7 @@
 import Link from 'next/link'
 import Image from 'next/image'
 import { SocialLinks } from '@/components/ui/SocialLinks'
+import { BUSINESS_HOURS } from '@/lib/site'
 
 const SERVICES_LINKS = ['Instalação', 'Manutenção', 'Revenda', 'Mini VRF']
 const PRODUCT_LINKS = [
@@ -52,7 +53,7 @@ export function Footer() {
             <p className="text-[11px] font-bold uppercase tracking-[0.1em] text-white/35 mb-4">Contato</p>
             {[
               { icon: '📍', text: 'Cascavel, Paraná, Brasil' },
-              { icon: '⏰', text: 'Seg – Sáb: 8h às 18h' },
+              { icon: '⏰', text: BUSINESS_HOURS },
               { icon: '📞', text: '(45) 99116-6730' },
             ].map((c) => (
               <div key={c.text} className="flex items-start gap-2 text-[13px] text-white/55 mb-2.5">

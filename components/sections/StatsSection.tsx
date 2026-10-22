@@ -1,11 +1,12 @@
 'use client'
 
 import { useCountUp } from '@/hooks/useCountUp'
+import { COMPANY_STATS } from '@/lib/site'
 
 const STATS = [
-  { target: 13, suffix: '+', label: 'Anos de experiência' },
-  { target: 7000, suffix: '+', label: 'Serviços realizados' },
-  { target: 6, suffix: '', label: 'Tipos de equipamentos' },
+  { target: COMPANY_STATS.years, suffix: '+', label: 'Anos de experiência' },
+  { target: COMPANY_STATS.services, suffix: '+', label: 'Serviços realizados' },
+  { target: COMPANY_STATS.clients, suffix: '+', label: 'Clientes atendidos' },
   { target: 100, suffix: '%', label: 'Atendimento direto' },
 ]
 
@@ -17,7 +18,7 @@ function StatItem({ stat, last }: { stat: typeof STATS[0]; last: boolean }) {
       className={`text-center py-8 px-4 ${!last ? 'border-r border-white/[.08]' : ''}`}
     >
       <div className="text-[3.5rem] font-extrabold text-white tracking-[-0.04em] leading-none">
-        {count}
+        {count.toLocaleString('pt-BR')}
         <span className="text-accent">{stat.suffix}</span>
       </div>
       <div className="text-[13px] text-white/50 mt-1.5 font-medium">{stat.label}</div>
