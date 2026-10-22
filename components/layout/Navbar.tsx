@@ -17,7 +17,6 @@ const BASE_ITEMS = [
   { label: 'Simulador', href: '/#simulador' },
   { label: 'Produtos', href: '/#produtos' },
   { label: 'Galeria', href: '/#galeria' },
-  { label: 'Sobre', href: '/#sobre' },
   { label: 'Contato', href: '/#contato' },
 ]
 

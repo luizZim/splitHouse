@@ -6,7 +6,6 @@ import { SimuladorSection } from '@/components/sections/SimuladorSection'
 import { DiagnosticSection } from '@/components/sections/DiagnosticSection'
 import { ProductsSection } from '@/components/sections/ProductsSection'
 import { GallerySection } from '@/components/sections/GallerySection'
-import { AboutSection } from '@/components/sections/AboutSection'
 import { CTASection } from '@/components/sections/CTASection'
 import { ScrollRestorer } from '@/components/layout/ScrollRestorer'
 import { ServiceModalsProvider } from '@/components/services/ServiceModals'
@@ -32,7 +31,6 @@ export default function HomePage() {
       <DiagnosticSection />
       <ProductsSection types={withTypeCovers(PRODUCT_TYPES)} brands={withBrandLogos(BRANDS)} />
       <GallerySection items={gallery} />
-      <AboutSection />
       <CTASection />
     </ServiceModalsProvider>
   )
