@@ -1,23 +1,3 @@
-export interface ProductCategory {
-  id: string
-  label: string
-  badge?: string
-  bg: string
-  accent: string
-  desc: string
-}
-
-export interface Product {
-  id: string
-  name: string
-  brand: string
-  btu: string
-  type: string
-  use: string
-  energy: 'A' | 'B'
-  categoryId: string
-}
-
 export interface Service {
   id: string
   title: string

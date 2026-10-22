@@ -38,10 +38,6 @@ export function buildContatoMessage(nome: string, telefone: string, mensagem: st
 ${mensagem}`
 }
 
-export function buildProductMessage(productName: string, btu: string): string {
-  return `Olá! Tenho interesse no ${productName} (${btu} BTU). Gostaria de um orçamento com instalação.`
-}
-
 export function buildServiceMessage(serviceName: string): string {
   return `Olá! Gostaria de um orçamento para o serviço de ${serviceName.toLowerCase()}.`
 }

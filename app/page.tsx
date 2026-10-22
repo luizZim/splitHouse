@@ -8,6 +8,9 @@ import { ProductsSection } from '@/components/sections/ProductsSection'
 import { TestimonialsSection } from '@/components/sections/TestimonialsSection'
 import { AboutSection } from '@/components/sections/AboutSection'
 import { CTASection } from '@/components/sections/CTASection'
+import { ScrollRestorer } from '@/components/layout/ScrollRestorer'
+import { BRANDS } from '@/lib/data/catalog'
+import { withBrandLogos } from '@/lib/catalog/assets'
 
 export const metadata: Metadata = {
   title: 'Split House — Instalação e Manutenção de Ar Condicionado em Cascavel',
@@ -16,12 +19,13 @@ export const metadata: Metadata = {
 export default function HomePage() {
   return (
     <>
+      <ScrollRestorer />
       <HeroSection />
       <StatsSection />
       <ServicesSection />
       <SimuladorSection />
       <DiagnosticSection />
-      <ProductsSection />
+      <ProductsSection brands={withBrandLogos(BRANDS)} />
       <TestimonialsSection />
       <AboutSection />
       <CTASection />
