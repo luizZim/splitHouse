@@ -8,6 +8,8 @@ import {
   areaFor,
   formatArea,
   formatBtu,
+  visibleCapacities,
+  isBeyondLimit,
 } from './select'
 
 function line(brand: ProductLine['brand'], btus: number[]): ProductLine {
@@ -102,6 +104,43 @@ describe('areaFor / formatArea', () => {
   it('formata área', () => {
     expect(formatArea([0, 15])).toBe('até 15 m²')
     expect(formatArea([15, 20])).toBe('15–20 m²')
+  })
+})
+
+describe('visibleCapacities', () => {
+  const MANY = [1, 2, 3, 4, 5, 6, 7, 8].map((n) => n * 10000)
+
+  it('até 5 capacidades: mostra todas, sem botão', () => {
+    const caps = MANY.slice(0, 5)
+    expect(visibleCapacities(caps, 10000, false)).toEqual({ visible: caps, hiddenCount: 0, collapsible: false })
+  })
+
+  it('mais de 5 e recolhido: mostra as 5 primeiras e conta as escondidas', () => {
+    expect(visibleCapacities(MANY, 20000, false)).toEqual({
+      visible: [10000, 20000, 30000, 40000, 50000],
+      hiddenCount: 3,
+      collapsible: true,
+    })
+  })
+
+  it('expandido: mostra todas', () => {
+    expect(visibleCapacities(MANY, 20000, true)).toEqual({ visible: MANY, hiddenCount: 0, collapsible: true })
+  })
+
+  it('recolhido com a selecionada além das 5: ela continua visível', () => {
+    expect(visibleCapacities(MANY, 70000, false)).toEqual({
+      visible: [10000, 20000, 30000, 40000, 50000, 70000],
+      hiddenCount: 2,
+      collapsible: true,
+    })
+  })
+})
+
+describe('isBeyondLimit', () => {
+  it('indica se a capacidade ficaria escondida', () => {
+    const MANY = [1, 2, 3, 4, 5, 6].map((n) => n * 10000)
+    expect(isBeyondLimit(MANY, 50000)).toBe(false)
+    expect(isBeyondLimit(MANY, 60000)).toBe(true)
   })
 })
 

@@ -4,7 +4,7 @@ import { useState } from 'react'
 import Image from 'next/image'
 import { useRouter, useSearchParams } from 'next/navigation'
 import { AnimatePresence, motion } from 'framer-motion'
-import { CheckCircle } from 'lucide-react'
+import { CheckCircle, Minus, Plus } from 'lucide-react'
 import { ACIllustration } from '@/components/ui/ACIllustration'
 import { BrandLogo } from '@/components/catalog/BrandLogo'
 import { QuoteFlow } from '@/components/catalog/QuoteFlow'
@@ -16,7 +16,9 @@ import {
   findVariant,
   formatArea,
   formatBtu,
+  isBeyondLimit,
   resolveSelection,
+  visibleCapacities,
 } from '@/lib/catalog/select'
 import type { Brand, BrandId, ProductLine, ProductType } from '@/lib/catalog/types'
 import type { QuoteSelection } from '@/lib/whatsapp'
@@ -35,6 +37,8 @@ export function ProductConfigurator({ type, lines, brands }: Props) {
   )
 
   const capacities = capacitiesFor(lines)
+  const [expanded, setExpanded] = useState(() => isBeyondLimit(capacities, sel.btu))
+  const capView = visibleCapacities(capacities, sel.btu, expanded)
   const available = brandsFor(lines, sel.btu)
   const typeBrands = brands.filter((b) => lines.some((l) => l.brand === b.id))
   const found = findVariant(lines, sel)!
@@ -45,6 +49,7 @@ export function ProductConfigurator({ type, lines, brands }: Props) {
   function update(next: { btu?: number; brand?: BrandId }) {
     const r = resolveSelection(lines, next.btu ?? sel.btu, next.brand ?? sel.brand)
     setSel(r)
+    if (isBeyondLimit(capacities, r.btu)) setExpanded(true)
     router.replace(`?btu=${r.btu}&marca=${r.brand}`, { scroll: false })
   }
 
@@ -113,20 +118,46 @@ export function ProductConfigurator({ type, lines, brands }: Props) {
       <div>
         <p className="text-[12px] font-bold uppercase tracking-[0.1em] text-gray-500 mb-2.5">Capacidade</p>
         <div className="flex flex-wrap gap-2 mb-6">
-          {capacities.map((c) => (
-            <button
-              key={c}
+          <AnimatePresence initial={false}>
+            {capView.visible.map((c) => (
+              <motion.button
+                key={c}
+                layout
+                initial={{ opacity: 0, scale: 0.9 }}
+                animate={{ opacity: 1, scale: 1 }}
+                exit={{ opacity: 0, scale: 0.9 }}
+                transition={{ duration: 0.15 }}
+                type="button"
+                onClick={() => update({ btu: c })}
+                aria-pressed={c === sel.btu}
+                className={cn(
+                  'px-4 h-10 rounded-lg text-[13px] font-semibold border-[1.5px] transition-colors',
+                  c === sel.btu ? 'bg-brand text-white border-brand' : 'bg-white text-gray-700 border-gray-200 hover:border-brand hover:text-brand'
+                )}
+              >
+                {formatBtu(c)} BTU
+              </motion.button>
+            ))}
+          </AnimatePresence>
+          {capView.collapsible && (
+            <motion.button
+              layout
               type="button"
-              onClick={() => update({ btu: c })}
-              aria-pressed={c === sel.btu}
-              className={cn(
-                'px-4 h-10 rounded-lg text-[13px] font-semibold border-[1.5px] transition-colors',
-                c === sel.btu ? 'bg-brand text-white border-brand' : 'bg-white text-gray-700 border-gray-200 hover:border-brand hover:text-brand'
-              )}
+              onClick={() => setExpanded((v) => !v)}
+              aria-expanded={expanded}
+              className="px-3.5 h-10 rounded-lg text-[13px] font-semibold border-[1.5px] border-dashed border-brand/40 text-brand bg-[#EEF0FC] hover:bg-brand hover:text-white hover:border-brand transition-colors inline-flex items-center gap-1.5"
             >
-              {formatBtu(c)} BTU
-            </button>
-          ))}
+              {expanded ? (
+                <>
+                  <Minus size={14} /> Ver menos
+                </>
+              ) : (
+                <>
+                  <Plus size={14} /> {capView.hiddenCount} mais
+                </>
+              )}
+            </motion.button>
+          )}
         </div>
 
         <p className="text-[12px] font-bold uppercase tracking-[0.1em] text-gray-500 mb-2.5">Marca</p>

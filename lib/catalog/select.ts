@@ -45,6 +45,24 @@ export function findVariant(
   return line && variant ? { line, variant } : undefined
 }
 
+export const CAPACITY_LIMIT = 5
+
+export function isBeyondLimit(caps: number[], btu: number): boolean {
+  return caps.indexOf(btu) >= CAPACITY_LIMIT
+}
+
+/** Capacidades visíveis no seletor: as primeiras N (+ a selecionada) quando recolhido. */
+export function visibleCapacities(
+  caps: number[],
+  selected: number,
+  expanded: boolean
+): { visible: number[]; hiddenCount: number; collapsible: boolean } {
+  if (caps.length <= CAPACITY_LIMIT) return { visible: caps, hiddenCount: 0, collapsible: false }
+  if (expanded) return { visible: caps, hiddenCount: 0, collapsible: true }
+  const visible = caps.filter((c, i) => i < CAPACITY_LIMIT || c === selected)
+  return { visible, hiddenCount: caps.length - visible.length, collapsible: true }
+}
+
 export function areaFor(btu: number, override?: [number, number]): [number, number] {
   if (override) return override
   if (btu > 60000) return [Math.round(btu / 750), Math.round(btu / 600)]
