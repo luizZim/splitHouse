@@ -20,11 +20,11 @@ function TypeCard({ type, brands }: { type: ProductType; brands: Brand[] }) {
   const typeBrands = brands.filter((b) => lines.some((l) => l.brand === b.id))
 
   return (
-    <motion.div variants={fadeUp}>
+    <motion.div variants={fadeUp} className="h-full">
       <Link
         href={`/produtos/${type.id}`}
         onClick={() => rememberHomeScroll(`/produtos/${type.id}`, window.scrollY)}
-        className="group block bg-white rounded-xl overflow-hidden shadow-[0_2px_12px_rgba(46,49,146,.08)] hover:shadow-[0_8px_32px_rgba(46,49,146,.14)] hover:-translate-y-0.5 border-[1.5px] border-transparent hover:border-[#EEF0FC] transition-all duration-250"
+        className="group flex flex-col h-full bg-white rounded-xl overflow-hidden shadow-[0_2px_12px_rgba(46,49,146,.08)] hover:shadow-[0_8px_32px_rgba(46,49,146,.14)] hover:-translate-y-0.5 border-[1.5px] border-transparent hover:border-[#EEF0FC] transition-all duration-250"
       >
         <div className={`h-[180px] bg-gradient-to-br ${type.bg} flex items-center justify-center relative overflow-hidden`}>
           {type.cover ? (
@@ -47,7 +47,7 @@ function TypeCard({ type, brands }: { type: ProductType; brands: Brand[] }) {
             </span>
           )}
         </div>
-        <div className="p-5">
+        <div className="p-5 flex-1 flex flex-col">
           <div className="text-[10px] font-bold uppercase tracking-[0.1em] mb-1 text-brand">{type.label}</div>
           <div className="text-xs text-gray-400 mb-3">
             {formatBtu(caps[0])}–{formatBtu(caps[caps.length - 1])} BTU
@@ -57,7 +57,7 @@ function TypeCard({ type, brands }: { type: ProductType; brands: Brand[] }) {
               <BrandLogo key={b.id} brand={b} className="h-4 text-[10px]" />
             ))}
           </div>
-          <span className="inline-flex items-center gap-1.5 text-[13px] font-semibold text-brand">
+          <span className="mt-auto inline-flex items-center gap-1.5 text-[13px] font-semibold text-brand">
             Escolher modelo <ArrowRight size={14} />
           </span>
         </div>

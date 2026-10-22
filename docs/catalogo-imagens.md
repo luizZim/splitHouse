@@ -5,7 +5,7 @@
 Todas as fotos dos aparelhos e logos estão presentes.
 
 **Capas dos cards da home** (`public/catalog/<tipo>/capa.jpg`, foto de ambiente, horizontal, ~1920 px)
-- Falta: Piso Teto (`public/catalog/piso-teto/capa.jpg`) — ideal: foto de instalação própria em loja/restaurante com o piso teto aparente.
+- Todas presentes. Piso Teto usa foto de produto; se tiver uma foto de instalação própria (loja/restaurante), substitua `public/catalog/piso-teto/capa.jpg`.
 
 **Trocar por foto com evaporadora + condensadora** (hoje só mostram a unidade interna)
 - Hi-Wall: Gree, LG, Samsung, Daikin
