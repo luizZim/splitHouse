@@ -19,6 +19,8 @@ export const SERVICES: Service[] = [
       'Instalação com mão de obra qualificada',
       'Teste e entrega com garantia',
     ],
+    action: { modal: 'install' },
+    galleryTag: 'instalacao',
   },
   {
     id: 'manutencao',
@@ -39,6 +41,8 @@ export const SERVICES: Service[] = [
       'Limpeza das serpentinas',
       'Relatório de condições do equipamento',
     ],
+    action: { modal: 'maintenance' },
+    galleryTag: 'manutencao',
   },
   {
     id: 'revenda',
@@ -58,6 +62,7 @@ export const SERVICES: Service[] = [
       'Instalação profissional inclusa',
       'Garantia do produto e do serviço',
     ],
+    action: { section: 'produtos', label: 'Ver produtos' },
   },
   {
     id: 'mini-vrf',
@@ -77,5 +82,27 @@ export const SERVICES: Service[] = [
       'Conexão e teste do sistema',
       'Entrega com garantia e orientações',
     ],
+    action: { section: 'produtos', label: 'Ver produtos' },
+    galleryTag: 'mini-vrf',
+  },
+  {
+    id: 'limpeza-solar',
+    title: 'Limpeza de placa solar',
+    color: '#0E9F6E',
+    desc: 'Limpeza profissional de placas solares com equipamento próprio, recuperando a eficiência de geração do seu sistema.',
+    when: [
+      'Placas com poeira, fuligem ou sujeira de pássaros',
+      'Geração de energia caiu sem motivo aparente',
+      'Mais de 6 meses sem limpeza',
+      'Região com muita poeira ou perto de lavouras',
+    ],
+    steps: [
+      'Avaliação do acesso e da segurança',
+      'Limpeza com escova rotativa e água, sem produtos abrasivos',
+      'Inspeção visual das placas e fixações',
+      'Fotos de antes e depois',
+    ],
+    action: { modal: 'solar' },
+    galleryTag: 'placa-solar',
   },
 ]

@@ -5,6 +5,7 @@ import { Navbar } from '@/components/layout/Navbar'
 import { Footer } from '@/components/layout/Footer'
 import { FABWhatsApp } from '@/components/layout/FABWhatsApp'
 import { MainContent } from '@/components/layout/MainContent'
+import { scanGallery } from '@/lib/gallery/scan'
 
 const poppins = Poppins({
   subsets: ['latin'],
@@ -34,7 +35,7 @@ export default function RootLayout({
   return (
     <html lang="pt-BR" className={poppins.variable}>
       <body className="font-sans">
-        <Navbar />
+        <Navbar hasGallery={scanGallery().length > 0} />
         <MainContent>{children}</MainContent>
         <Footer />
         <FABWhatsApp />

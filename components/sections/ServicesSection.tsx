@@ -2,14 +2,30 @@
 
 import { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { Building2, PlugZap, ShoppingBag, Wrench, ChevronDown, Target, ListChecks, type LucideIcon } from 'lucide-react'
+import {
+  ArrowRight,
+  Building2,
+  ChevronDown,
+  Images,
+  ListChecks,
+  MessageCircle,
+  PlugZap,
+  ShoppingBag,
+  Sun,
+  Target,
+  Wrench,
+  type LucideIcon,
+} from 'lucide-react'
 import { SectionHeader } from '@/components/ui/SectionHeader'
 import { IconBadge } from '@/components/ui/IconBadge'
 import { Reveal } from '@/components/ui/Reveal'
-import { WhatsAppButton } from '@/components/ui/Button'
+import { WA_BASE, WA_SIZES } from '@/components/ui/Button'
+import { useOpenServiceModal } from '@/components/services/ServiceModals'
+import { GALLERY_FILTER_EVENT } from '@/components/sections/GallerySection'
 import { fadeUp } from '@/lib/motion'
+import { scrollToId } from '@/lib/navigation/scroll'
+import { cn } from '@/lib/utils/cn'
 import { SERVICES } from '@/lib/data/services'
-import { buildServiceMessage } from '@/lib/whatsapp'
 import type { Service } from '@/types'
 
 const SERVICE_ICONS: Record<string, LucideIcon> = {
@@ -17,15 +33,28 @@ const SERVICE_ICONS: Record<string, LucideIcon> = {
   manutencao: Wrench,
   revenda: ShoppingBag,
   'mini-vrf': Building2,
+  'limpeza-solar': Sun,
 }
 
-function ServiceCard({ service, open, onToggle }: { service: Service; open: boolean; onToggle: () => void }) {
+function ServiceCard({
+  service,
+  open,
+  onToggle,
+  hasPhotos,
+}: {
+  service: Service
+  open: boolean
+  onToggle: () => void
+  hasPhotos: boolean
+}) {
+  const openModal = useOpenServiceModal()
+  const action = service.action
   return (
     <motion.div
       variants={fadeUp}
       layout
       className={`bg-white rounded-xl shadow-[0_2px_12px_rgba(46,49,146,.08)] border-[1.5px] transition-shadow duration-250 ${
-        open ? 'border-[#EEF0FC] shadow-[0_12px_40px_rgba(46,49,146,.14)] sm:col-span-2 lg:col-span-4' : 'border-transparent hover:shadow-[0_8px_32px_rgba(46,49,146,.14)]'
+        open ? 'border-[#EEF0FC] shadow-[0_12px_40px_rgba(46,49,146,.14)] sm:col-span-2 lg:col-span-3' :'border-transparent hover:shadow-[0_8px_32px_rgba(46,49,146,.14)]'
       }`}
     >
       <button type="button" onClick={onToggle} aria-expanded={open} className="w-full text-left p-7 flex items-start gap-4">
@@ -86,9 +115,33 @@ function ServiceCard({ service, open, onToggle }: { service: Service; open: bool
                   </ol>
                 </div>
               </div>
-              <WhatsAppButton message={buildServiceMessage(service.title)} size="sm">
-                Solicitar orçamento
-              </WhatsAppButton>
+              <div className="flex flex-wrap items-center gap-3">
+                {'modal' in action ? (
+                  <button type="button" onClick={() => openModal(action.modal)} className={cn(WA_BASE, WA_SIZES.sm)}>
+                    <MessageCircle size={15} /> Solicitar orçamento
+                  </button>
+                ) : (
+                  <button
+                    type="button"
+                    onClick={() => scrollToId(action.section)}
+                    className="inline-flex items-center gap-2 h-10 px-4 rounded-lg bg-brand text-white text-[13px] font-semibold hover:bg-brand-dark transition-colors"
+                  >
+                    {action.label} <ArrowRight size={15} />
+                  </button>
+                )}
+                {hasPhotos && (
+                  <button
+                    type="button"
+                    onClick={() => {
+                      window.dispatchEvent(new CustomEvent(GALLERY_FILTER_EVENT, { detail: service.galleryTag }))
+                      scrollToId('galeria')
+                    }}
+                    className="inline-flex items-center gap-1.5 h-10 px-3 text-[13px] font-semibold text-brand hover:underline"
+                  >
+                    <Images size={15} /> Ver fotos
+                  </button>
+                )}
+              </div>
             </div>
           </motion.div>
         )}
@@ -97,7 +150,7 @@ function ServiceCard({ service, open, onToggle }: { service: Service; open: bool
   )
 }
 
-export function ServicesSection() {
+export function ServicesSection({ galleryTags = [] }: { galleryTags?: string[] }) {
   const [openId, setOpenId] = useState<string | null>(null)
 
   return (
@@ -108,11 +161,12 @@ export function ServicesSection() {
           title="Serviços completos em climatização"
           subtitle="Do residencial ao industrial — atendimento direto com o profissional, garantia em todos os serviços."
         />
-        <Reveal className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+        <Reveal className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 grid-flow-row-dense gap-5">
           {SERVICES.map((s) => (
             <ServiceCard
               key={s.id}
               service={s}
+              hasPhotos={!!s.galleryTag && galleryTags.includes(s.galleryTag)}
               open={openId === s.id}
               onToggle={() => setOpenId((cur) => (cur === s.id ? null : s.id))}
             />

@@ -5,67 +5,27 @@ import Image from 'next/image'
 import { useEffect, useRef, useState } from 'react'
 import { usePathname, useRouter } from 'next/navigation'
 import { motion, AnimatePresence } from 'framer-motion'
-import { Menu, X, MessageCircle } from 'lucide-react'
+import { Menu, X } from 'lucide-react'
 import { useScrolled } from '@/hooks/useScrolled'
-import { openWhatsApp } from '@/lib/whatsapp'
+import { NAVBAR_OFFSET, scrollToId } from '@/lib/navigation/scroll'
+import { activeSectionAt } from '@/lib/navigation/scrollSpy'
 import { cn } from '@/lib/utils/cn'
 
-const NAV_ITEMS = [
+const BASE_ITEMS = [
   { label: 'Home', href: '/' },
   { label: 'Serviços', href: '/#servicos' },
   { label: 'Simulador', href: '/#simulador' },
   { label: 'Produtos', href: '/#produtos' },
+  { label: 'Galeria', href: '/#galeria' },
   { label: 'Sobre', href: '/#sobre' },
   { label: 'Contato', href: '/#contato' },
 ]
-
-const NAVBAR_OFFSET = 96
 
 function getHashId(href: string) {
   return href.includes('#') ? href.split('#')[1] : null
 }
 
-const SCROLL_DURATION = 600
-
-function easeInOutCubic(t: number) {
-  return t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2
-}
-
-function animateScrollTo(targetY: number, onDone?: () => void) {
-  const startY = window.scrollY
-  const distance = targetY - startY
-  if (Math.abs(distance) < 2) {
-    onDone?.()
-    return
-  }
-  const duration = Math.min(SCROLL_DURATION, 250 + Math.abs(distance) * 0.15)
-  const startTime = performance.now()
-
-  function step(now: number) {
-    const progress = Math.min((now - startTime) / duration, 1)
-    window.scrollTo({ top: startY + distance * easeInOutCubic(progress), behavior: 'instant' })
-    if (progress < 1) requestAnimationFrame(step)
-    else onDone?.()
-  }
-
-  requestAnimationFrame(step)
-}
-
-function scrollToId(id: string | null, onDone?: () => void) {
-  if (!id) {
-    animateScrollTo(0, onDone)
-    return
-  }
-  const el = document.getElementById(id)
-  if (!el) {
-    onDone?.()
-    return
-  }
-  const top = el.getBoundingClientRect().top + window.scrollY - NAVBAR_OFFSET
-  animateScrollTo(top, onDone)
-}
-
-export function Navbar() {
+export function Navbar({ hasGallery = false }: { hasGallery?: boolean }) {
   const pathname = usePathname()
   const router = useRouter()
   const isHome = pathname === '/'
@@ -74,17 +34,58 @@ export function Navbar() {
   const [hovered, setHovered] = useState<string | null>(null)
   const [activeSection, setActiveSection] = useState<string | null>(null)
   const pendingScroll = useRef<string | 'top' | null>(null)
+  /** Pausa o scroll-spy enquanto a rolagem disparada por clique acontece. */
+  const spyLocked = useRef(false)
+
+  const NAV_ITEMS = BASE_ITEMS.filter((i) => hasGallery || i.href !== '/#galeria')
+  const sectionIds = NAV_ITEMS.map((i) => getHashId(i.href)).filter((id): id is string => !!id)
+  const sectionKey = sectionIds.join(',')
 
   useEffect(() => {
     if (!isHome) setActiveSection(null)
   }, [isHome])
 
   useEffect(() => {
+    if (!isHome) return
+    const ids = sectionKey.split(',')
+    let frame = 0
+    function update() {
+      frame = 0
+      if (spyLocked.current) return
+      const sections = ids
+        .map((id) => document.getElementById(id))
+        .filter((el): el is HTMLElement => !!el)
+        .map((el) => ({ id: el.id, top: el.getBoundingClientRect().top }))
+      const atBottom = window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 4
+      setActiveSection(activeSectionAt(sections, NAVBAR_OFFSET + window.innerHeight * 0.25, atBottom))
+    }
+    function onScroll() {
+      if (!frame) frame = requestAnimationFrame(update)
+    }
+    update()
+    window.addEventListener('scroll', onScroll, { passive: true })
+    window.addEventListener('resize', onScroll)
+    return () => {
+      if (frame) cancelAnimationFrame(frame)
+      window.removeEventListener('scroll', onScroll)
+      window.removeEventListener('resize', onScroll)
+    }
+  }, [isHome, sectionKey])
+
+  function scrollLocked(id: string | null) {
+    spyLocked.current = true
+    scrollToId(id, () => {
+      spyLocked.current = false
+    })
+  }
+
+  useEffect(() => {
     if (isHome && pendingScroll.current) {
       const raw = pendingScroll.current
       pendingScroll.current = null
       const target = raw === 'top' ? null : raw
-      requestAnimationFrame(() => scrollToId(target))
+      setActiveSection(target)
+      requestAnimationFrame(() => scrollLocked(target))
     }
   }, [isHome])
 
@@ -96,7 +97,7 @@ export function Navbar() {
     setActiveSection(id)
 
     if (isHome) {
-      scrollToId(id)
+      scrollLocked(id)
       window.history.replaceState(null, '', id ? `/#${id}` : '/')
     } else {
       pendingScroll.current = id ?? 'top'
@@ -181,18 +182,8 @@ export function Navbar() {
           })}
         </div>
 
-        {/* CTA + hamburger */}
-        <div className="flex items-center gap-3">
-          <motion.button
-            whileHover={{ scale: 1.03 }}
-            whileTap={{ scale: 0.97 }}
-            onClick={() => openWhatsApp()}
-            className="hidden sm:inline-flex items-center gap-2 bg-whatsapp hover:bg-whatsapp-dark text-white text-sm font-semibold rounded-full px-5 h-[44px] transition-colors duration-200 shadow-[0_4px_16px_rgba(37,211,102,.3)] hover:shadow-[0_6px_20px_rgba(37,211,102,.4)]"
-          >
-            <MessageCircle size={15} />
-            Fale no WhatsApp
-          </motion.button>
-
+        {/* Hamburger (mobile) / espaçador que mantém o menu centralizado */}
+        <div className="flex items-center gap-3 md:w-[120px] md:justify-end">
           <button
             onClick={() => setMenuOpen((v) => !v)}
             className={cn(
@@ -233,12 +224,6 @@ export function Navbar() {
                 </Link>
               )
             })}
-            <button
-              onClick={() => { openWhatsApp(); setMenuOpen(false) }}
-              className="mt-3 flex items-center justify-center gap-2 bg-whatsapp text-white text-sm font-semibold rounded-full px-4 py-3.5"
-            >
-              <MessageCircle size={17} /> Falar no WhatsApp
-            </button>
           </motion.div>
         )}
       </AnimatePresence>

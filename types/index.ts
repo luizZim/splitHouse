@@ -1,3 +1,6 @@
+/** Ação do botão do card: abrir um pop-up de orçamento ou rolar até uma seção. */
+export type ServiceAction = { modal: 'install' | 'maintenance' | 'solar' } | { section: string; label: string }
+
 export interface Service {
   id: string
   title: string
@@ -5,14 +8,9 @@ export interface Service {
   desc: string
   when: string[]
   steps: string[]
-}
-
-export interface Testimonial {
-  name: string
-  loc: string
-  initial: string
-  color: string
-  text: string
+  action: ServiceAction
+  /** Pasta em public/galeria/ com fotos deste serviço. */
+  galleryTag?: string
 }
 
 export type SunExposure = 'nao' | 'manha' | 'tarde' | 'dia-todo'

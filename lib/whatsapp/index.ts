@@ -36,10 +36,6 @@ export function buildSimuladorMessage(form: BTUFormData, result: BTUResult): str
   return lines.join('\n')
 }
 
-export function buildServiceMessage(serviceName: string): string {
-  return `Olá! Gostaria de um orçamento para o serviço de ${serviceName.toLowerCase()}.`
-}
-
 export interface QuoteSelection {
   typeLabel: string
   brandName: string
@@ -86,12 +82,16 @@ export function buildQuoteMessage(sel: QuoteSelection, install?: InstallInfo): s
     return lines.join('\n')
   }
 
-  lines.push(
-    '*Instalação*: Sim',
+  lines.push('*Instalação*: Sim', ...installLines(install))
+  return lines.join('\n')
+}
+
+/** Linhas com os dados do local de instalação (imóvel, cômodo, calor, vidros). */
+export function installLines(install: InstallInfo): string[] {
+  return [
     `• Imóvel: ${propertyText(install)}`,
     `• Local: ${roomText(install)}`,
     `• Muitos eletrodomésticos que geram calor: ${yesNo(install.heatAppliances)}`,
-    `• Muitos vidros/sol direto: ${yesNo(install.manyWindows)}`
-  )
-  return lines.join('\n')
+    `• Muitos vidros/sol direto: ${yesNo(install.manyWindows)}`,
+  ]
 }

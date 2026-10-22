@@ -2,18 +2,21 @@
 
 import { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { CheckCircle, Snowflake, Droplets, Volume2, type LucideIcon } from 'lucide-react'
+import { CheckCircle, Snowflake, Droplets, Volume2, MessageCircle, type LucideIcon } from 'lucide-react'
 import { SectionHeader } from '@/components/ui/SectionHeader'
 import { IconBadge } from '@/components/ui/IconBadge'
-import { WhatsAppButton } from '@/components/ui/Button'
+import { WA_BASE, WA_SIZES } from '@/components/ui/Button'
+import { useOpenServiceModal } from '@/components/services/ServiceModals'
 import { fadeUp } from '@/lib/motion'
-import { buildServiceMessage } from '@/lib/whatsapp'
+import { cn } from '@/lib/utils/cn'
+import type { SymptomId } from '@/lib/services/maintenance'
 
-const PROBLEMS: { id: string; label: string; icon: LucideIcon; causes: string[] }[] = [
+const PROBLEMS: { id: string; label: string; icon: LucideIcon; symptom: SymptomId; causes: string[] }[] = [
   {
     id: 'gelando',
     label: 'Não está gelando',
     icon: Snowflake,
+    symptom: 'nao-gela',
     causes: [
       'Gás refrigerante baixo ou vazio — precisa de recarga',
       'Filtros sujos bloqueando a circulação de ar',
@@ -25,6 +28,7 @@ const PROBLEMS: { id: string; label: string; icon: LucideIcon; causes: string[] 
     id: 'agua',
     label: 'Vazando água',
     icon: Droplets,
+    symptom: 'vazando',
     causes: [
       'Dreno de condensado entupido ou dobrado',
       'Filtros muito sujos causando congelamento',
@@ -36,6 +40,7 @@ const PROBLEMS: { id: string; label: string; icon: LucideIcon; causes: string[] 
     id: 'barulho',
     label: 'Fazendo barulho',
     icon: Volume2,
+    symptom: 'barulho',
     causes: [
       'Suporte de fixação frouxo ou vibrando',
       'Peças internas soltas (tampas, parafusos)',
@@ -46,6 +51,7 @@ const PROBLEMS: { id: string; label: string; icon: LucideIcon; causes: string[] 
 ]
 
 export function DiagnosticSection() {
+  const openModal = useOpenServiceModal()
   const [selected, setSelected] = useState<string | null>(null)
   const sel = PROBLEMS.find((p) => p.id === selected)
 
@@ -106,12 +112,13 @@ export function DiagnosticSection() {
                     </div>
                   ))}
                 </div>
-                <WhatsAppButton
-                  message={`Olá! Meu ar condicionado está com um problema: ${sel.label.toLowerCase()}. Preciso de ajuda.`}
-                  className="w-full"
+                <button
+                  type="button"
+                  onClick={() => openModal('maintenance', { symptom: sel.symptom })}
+                  className={cn(WA_BASE, WA_SIZES.md, 'w-full')}
                 >
-                  Falar com técnico agora
-                </WhatsAppButton>
+                  <MessageCircle size={17} /> Pedir orçamento de manutenção
+                </button>
               </motion.div>
             )}
           </AnimatePresence>
