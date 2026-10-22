@@ -4,10 +4,10 @@ import { useState } from 'react'
 import Image from 'next/image'
 import { useRouter, useSearchParams } from 'next/navigation'
 import { AnimatePresence, motion } from 'framer-motion'
-import { CheckCircle, MessageCircle } from 'lucide-react'
+import { CheckCircle } from 'lucide-react'
 import { ACIllustration } from '@/components/ui/ACIllustration'
 import { BrandLogo } from '@/components/catalog/BrandLogo'
-import { WA_BASE, WA_SIZES } from '@/components/ui/Button'
+import { QuoteFlow } from '@/components/catalog/QuoteFlow'
 import { cn } from '@/lib/utils/cn'
 import {
   areaFor,
@@ -19,7 +19,7 @@ import {
   resolveSelection,
 } from '@/lib/catalog/select'
 import type { Brand, BrandId, ProductLine, ProductType } from '@/lib/catalog/types'
-import { buildQuoteMessage, openWhatsApp, type QuoteSelection } from '@/lib/whatsapp'
+import type { QuoteSelection } from '@/lib/whatsapp'
 
 interface Props {
   type: ProductType
@@ -196,13 +196,7 @@ export function ProductConfigurator({ type, lines, brands }: Props) {
           </p>
         </div>
 
-        <button
-          type="button"
-          onClick={() => openWhatsApp(buildQuoteMessage(quote))}
-          className={cn(WA_BASE, WA_SIZES.md, 'w-full')}
-        >
-          <MessageCircle size={17} /> Solicitar orçamento
-        </button>
+        <QuoteFlow selection={quote} />
 
         <p className="text-[11px] text-gray-400 mt-3">
           * Área aproximada de referência. Para um cálculo preciso, use o{' '}
