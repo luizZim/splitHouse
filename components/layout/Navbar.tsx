@@ -25,21 +25,25 @@ function getHashId(href: string) {
   return href.includes('#') ? href.split('#')[1] : null
 }
 
-const SCROLL_DURATION = 1100
+const SCROLL_DURATION = 600
 
-function easeOutQuart(t: number) {
-  return 1 - Math.pow(1 - t, 4)
+function easeInOutCubic(t: number) {
+  return t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2
 }
 
 function animateScrollTo(targetY: number, onDone?: () => void) {
   const startY = window.scrollY
   const distance = targetY - startY
+  if (Math.abs(distance) < 2) {
+    onDone?.()
+    return
+  }
+  const duration = Math.min(SCROLL_DURATION, 250 + Math.abs(distance) * 0.15)
   const startTime = performance.now()
 
   function step(now: number) {
-    const elapsed = now - startTime
-    const progress = Math.min(elapsed / SCROLL_DURATION, 1)
-    window.scrollTo(0, startY + distance * easeOutQuart(progress))
+    const progress = Math.min((now - startTime) / duration, 1)
+    window.scrollTo({ top: startY + distance * easeInOutCubic(progress), behavior: 'instant' })
     if (progress < 1) requestAnimationFrame(step)
     else onDone?.()
   }
@@ -48,21 +52,17 @@ function animateScrollTo(targetY: number, onDone?: () => void) {
 }
 
 function scrollToId(id: string | null, onDone?: () => void) {
-  requestAnimationFrame(() => {
-    requestAnimationFrame(() => {
-      if (!id) {
-        animateScrollTo(0, onDone)
-        return
-      }
-      const el = document.getElementById(id)
-      if (!el) {
-        onDone?.()
-        return
-      }
-      const top = el.getBoundingClientRect().top + window.scrollY - NAVBAR_OFFSET
-      animateScrollTo(top, onDone)
-    })
-  })
+  if (!id) {
+    animateScrollTo(0, onDone)
+    return
+  }
+  const el = document.getElementById(id)
+  if (!el) {
+    onDone?.()
+    return
+  }
+  const top = el.getBoundingClientRect().top + window.scrollY - NAVBAR_OFFSET
+  animateScrollTo(top, onDone)
 }
 
 export function Navbar() {
@@ -84,7 +84,7 @@ export function Navbar() {
       const raw = pendingScroll.current
       pendingScroll.current = null
       const target = raw === 'top' ? null : raw
-      scrollToId(target)
+      requestAnimationFrame(() => scrollToId(target))
     }
   }, [isHome])
 
