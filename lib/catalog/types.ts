@@ -48,6 +48,8 @@ export interface ProductType {
   summary: string
   idealFor: string[]
   installation: string
+  /** Foto de ambiente do card da home. Preenchido no servidor por lib/catalog/assets.ts quando o arquivo existe. */
+  cover?: string
 }
 
 export interface Selection {

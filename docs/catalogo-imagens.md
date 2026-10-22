@@ -2,7 +2,10 @@
 
 ## Pendências (22/10/2026)
 
-Todas as fotos e logos estão presentes.
+Todas as fotos dos aparelhos e logos estão presentes.
+
+**Capas dos cards da home** (`public/catalog/<tipo>/capa.jpg`, foto de ambiente, horizontal, ~1920 px)
+- Falta: Piso Teto (`public/catalog/piso-teto/capa.jpg`) — ideal: foto de instalação própria em loja/restaurante com o piso teto aparente.
 
 **Trocar por foto com evaporadora + condensadora** (hoje só mostram a unidade interna)
 - Hi-Wall: Gree, LG, Samsung, Daikin

@@ -1,6 +1,6 @@
 import fs from 'node:fs'
 import path from 'node:path'
-import type { Brand, ProductLine } from './types'
+import type { Brand, ProductLine, ProductType } from './types'
 
 const EXTS = ['.webp', '.avif', '.png', '.jpg', '.jpeg', '.svg']
 
@@ -14,6 +14,10 @@ export function findPublicAsset(base: string): string | undefined {
 
 export function withLineImages(lines: ProductLine[]): ProductLine[] {
   return lines.map((l) => ({ ...l, image: findPublicAsset(`/catalog/${l.type}/${l.brand}`) }))
+}
+
+export function withTypeCovers(types: ProductType[]): ProductType[] {
+  return types.map((t) => ({ ...t, cover: findPublicAsset(`/catalog/${t.id}/capa`) }))
 }
 
 export function withBrandLogos(brands: Brand[]): Brand[] {
