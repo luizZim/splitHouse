@@ -2,9 +2,7 @@
 
 ## Pendências (22/10/2026)
 
-**Faltando**
-- Foto: Mini VRF LG (`public/catalog/mini-vrf/lg.*`)
-- Logos: Elgin (`public/brands/elgin.*`) e Daikin (`public/brands/daikin.*`)
+Todas as fotos e logos estão presentes.
 
 **Trocar por foto com evaporadora + condensadora** (hoje só mostram a unidade interna)
 - Hi-Wall: Gree, LG, Samsung, Daikin
