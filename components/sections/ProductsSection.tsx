@@ -22,7 +22,7 @@ function TypeCard({ type, brands }: { type: ProductType; brands: Brand[] }) {
     <motion.div variants={fadeUp}>
       <Link
         href={`/produtos/${type.id}`}
-        onClick={rememberHomeScroll}
+        onClick={() => rememberHomeScroll(`/produtos/${type.id}`, window.scrollY)}
         className="block bg-white rounded-xl overflow-hidden shadow-[0_2px_12px_rgba(46,49,146,.08)] hover:shadow-[0_8px_32px_rgba(46,49,146,.14)] hover:-translate-y-0.5 border-[1.5px] border-transparent hover:border-[#EEF0FC] transition-all duration-250"
       >
         <div className={`h-[140px] bg-gradient-to-br ${type.bg} flex items-center justify-center relative`}>

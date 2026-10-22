@@ -1,36 +1,28 @@
-const SCROLL_KEY = 'sh:homeScroll'
-const RESTORE_KEY = 'sh:restore'
+// Estado em memória: sobrevive à navegação client-side (home → produto → voltar)
+// e é descartado em qualquer carregamento completo da página.
+let saved: { path: string; y: number } | null = null
+let restorePending = false
 
-export function rememberHomeScroll() {
-  try {
-    sessionStorage.setItem(SCROLL_KEY, String(window.scrollY))
-  } catch {}
+/** Chamado ao clicar no card da home: guarda a posição e o produto de destino. */
+export function rememberHomeScroll(path: string, y: number) {
+  saved = { path, y }
+  restorePending = false
 }
 
-export function requestRestore() {
-  try {
-    sessionStorage.setItem(RESTORE_KEY, '1')
-  } catch {}
+/** O histórico anterior é a home somente se o produto atual foi aberto pelo card. */
+export function canGoBackHome(currentPath: string): boolean {
+  return saved?.path === currentPath
 }
 
-export function hasHomeScroll(): boolean {
-  try {
-    return sessionStorage.getItem(SCROLL_KEY) !== null
-  } catch {
-    return false
-  }
+/** Agenda a restauração apenas quando o destino da navegação é a home. */
+export function requestRestore(destinationPath: string) {
+  if (destinationPath === '/' && saved) restorePending = true
 }
 
-/** Retorna a posição salva se um retorno foi solicitado; limpa as chaves. */
+/** Chamado ao montar a home: retorna a posição se houve retorno; sempre limpa o estado. */
 export function consumeRestore(): number | null {
-  try {
-    const requested = sessionStorage.getItem(RESTORE_KEY)
-    sessionStorage.removeItem(RESTORE_KEY)
-    const y = sessionStorage.getItem(SCROLL_KEY)
-    if (!requested || y === null) return null
-    sessionStorage.removeItem(SCROLL_KEY)
-    return Number(y)
-  } catch {
-    return null
-  }
+  const y = restorePending && saved ? saved.y : null
+  saved = null
+  restorePending = false
+  return y
 }

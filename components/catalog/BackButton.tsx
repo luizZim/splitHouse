@@ -1,22 +1,23 @@
 'use client'
 
 import { useEffect } from 'react'
-import { useRouter } from 'next/navigation'
+import { usePathname, useRouter } from 'next/navigation'
 import { ChevronLeft } from 'lucide-react'
-import { hasHomeScroll, requestRestore } from '@/lib/navigation/homeReturn'
+import { canGoBackHome, requestRestore } from '@/lib/navigation/homeReturn'
 
 export function BackButton() {
   const router = useRouter()
+  const pathname = usePathname()
 
   useEffect(() => {
-    const onPop = () => requestRestore()
+    const onPop = () => requestRestore(window.location.pathname)
     window.addEventListener('popstate', onPop)
     return () => window.removeEventListener('popstate', onPop)
   }, [])
 
   function goBack() {
-    if (hasHomeScroll()) {
-      requestRestore()
+    if (canGoBackHome(pathname)) {
+      requestRestore('/')
       router.back()
     } else {
       router.push('/#produtos')
