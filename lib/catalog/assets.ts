@@ -2,7 +2,7 @@ import fs from 'node:fs'
 import path from 'node:path'
 import type { Brand, ProductLine } from './types'
 
-const EXTS = ['.webp', '.png', '.jpg', '.jpeg', '.svg']
+const EXTS = ['.webp', '.avif', '.png', '.jpg', '.jpeg', '.svg']
 
 export function findPublicAsset(base: string): string | undefined {
   for (const ext of EXTS) {

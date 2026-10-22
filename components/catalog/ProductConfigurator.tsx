@@ -74,7 +74,12 @@ export function ProductConfigurator({ type, lines, brands }: Props) {
     <div className="grid grid-cols-1 lg:grid-cols-[1fr_1.15fr] gap-10 items-start">
       {/* Imagem */}
       <div className="lg:sticky lg:top-[112px]">
-        <div className={`bg-gradient-to-br ${type.bg} rounded-2xl aspect-[16/9] lg:aspect-[4/3] relative overflow-hidden flex items-center justify-center`}>
+        <div
+          className={cn(
+            'rounded-2xl aspect-[16/9] lg:aspect-[4/3] relative overflow-hidden flex items-center justify-center',
+            line.image ? 'bg-white border border-gray-200' : `bg-gradient-to-br ${type.bg}`
+          )}
+        >
           <AnimatePresence mode="wait">
             <motion.div
               key={`${sel.brand}-${sel.btu}`}

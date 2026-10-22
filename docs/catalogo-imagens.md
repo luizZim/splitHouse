@@ -1,5 +1,26 @@
 # Imagens do catálogo
 
+## Pendências (22/10/2026)
+
+**Faltando**
+- Foto: Mini VRF LG (`public/catalog/mini-vrf/lg.*`)
+- Logos: Elgin (`public/brands/elgin.*`) e Daikin (`public/brands/daikin.*`)
+
+**Trocar por foto com evaporadora + condensadora** (hoje só mostram a unidade interna)
+- Hi-Wall: Gree, LG, Samsung, Daikin
+- Piso Teto: Gree, Midea, Elgin
+- Cassete: Gree, LG, Samsung, Elgin, Daikin
+
+**Já mostram as duas unidades:** Hi-Wall Midea, Hi-Wall Elgin, Cassete Midea.
+
+**Ajustes de qualidade (opcional)**
+- Hi-Wall LG: tem faixa de ícones embaixo da foto
+- Cassete Midea: tem selo "Nº1" sobre a foto
+- Mini VRF Gree: tem selo laranja "R410A / Inverter"
+- Logo Midea: tem fundo azul (o ideal é fundo transparente)
+
+Mini VRF e Splitão: a unidade externa sozinha é o padrão de mercado (a interna varia por projeto).
+
 Coloque cada arquivo **exatamente** no caminho indicado. Não é preciso mexer no código: o site detecta o arquivo sozinho. Depois de adicionar as imagens, rode `npm run build` (ou reinicie o `npm run dev`).
 
 Enquanto a imagem não existir, o site mostra a ilustração padrão (aparelho) ou o nome da marca (logo).
