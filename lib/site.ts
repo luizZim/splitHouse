@@ -1,3 +1,6 @@
+/** Endereço canônico — splithouse.com.br redireciona para o www. */
+export const SITE_URL = 'https://www.splithouse.com.br'
+
 export const SOCIAL = {
   instagram: 'https://www.instagram.com/leandro_moll22/',
   facebook: 'https://www.facebook.com/leandro.moll.7',
