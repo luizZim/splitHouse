@@ -1,7 +1,7 @@
 export const BRAND_IDS = ['gree', 'midea', 'lg', 'samsung', 'elgin', 'daikin'] as const
 export type BrandId = (typeof BRAND_IDS)[number]
 
-export const TYPE_IDS = ['hi-wall', 'piso-teto', 'cassete', 'mini-vrf', 'splitao'] as const
+export const TYPE_IDS = ['hi-wall', 'piso-teto', 'cassete', 'mini-vrf'] as const
 export type TypeId = (typeof TYPE_IDS)[number]
 
 export interface Brand {

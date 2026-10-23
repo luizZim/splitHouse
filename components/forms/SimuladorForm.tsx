@@ -226,7 +226,7 @@ export function SimuladorForm() {
                 <div className="flex items-start gap-2 bg-accent/10 border border-accent/30 rounded-lg px-3.5 py-2.5 text-xs text-[#9F4B04] mb-4">
                   <Info size={14} className="flex-shrink-0 mt-0.5" />
                   {result.r.btu === null
-                    ? 'Para ambientes desse porte o ideal é mais de um aparelho ou um sistema Mini VRF / Splitão. Fale com o técnico para dimensionar.'
+                    ? 'Para ambientes desse porte o ideal é mais de um aparelho ou um sistema Mini VRF. Fale com o técnico para dimensionar.'
                     : 'Estimativa baseada nas áreas indicadas pelos fabricantes. A confirmação final é feita na visita técnica.'}
                 </div>
 

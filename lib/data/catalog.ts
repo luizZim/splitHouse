@@ -56,18 +56,6 @@ export const PRODUCT_TYPES: ProductType[] = [
     installation:
       'Projeto dimensionado por técnico: uma condensadora externa ligada a várias evaporadoras (hi-wall, cassete ou dutada).',
   },
-  {
-    id: 'splitao',
-    label: 'Splitão',
-    badge: 'Industrial',
-    accent: '#2E3192',
-    bg: 'from-[#EEF0FC] to-[#7E89E7]',
-    summary:
-      'Sistema de alta capacidade com distribuição por dutos, para grandes áreas que precisam de climatização central.',
-    idealFor: ['Galpões', 'Supermercados', 'Auditórios', 'Indústrias'],
-    installation:
-      'Instalado com rede de dutos e área técnica ou casa de máquinas; requer projeto e visita técnica.',
-  },
 ]
 
 // Dados das páginas oficiais dos fabricantes (Brasil), consultadas em 10/2026.
@@ -460,28 +448,6 @@ export const PRODUCT_LINES: ProductLine[] = [
       { btu: 68200, model: 'RSUQ7AYM', voltage: '380V' },
       { btu: 76400, model: 'RSUQ8AYM', voltage: '380V' },
       { btu: 81900, model: 'RSUQ9AYM', voltage: '380V' },
-    ],
-  },
-
-  // ── Splitão ───────────────────────────────────────────────────
-  {
-    type: 'splitao',
-    brand: 'elgin',
-    name: 'Splitão',
-    inverter: false,
-    refrigerant: 'R-32',
-    highlights: [
-      'Fluido refrigerante ecológico R-32',
-      'Filtro de ar G4',
-      'Serpentina de cobre',
-      'Instalação na posição vertical ou horizontal',
-    ],
-    source: 'https://elgin.com.br/ar-condicionado/ar-condicionado-splitao',
-    variants: [
-      { btu: 90000, model: '45SAFC090C3CVA', voltage: '220V trifásico' }, // 7,5 TR
-      { btu: 120000, model: '45SAFC120C3CVA', voltage: '220V trifásico' }, // 10 TR
-      { btu: 180000, model: '45SAFC180C3CVA', voltage: '220V trifásico' }, // 15 TR
-      { btu: 240000, model: '45SAFC240C3CVA', voltage: '220V trifásico' }, // 20 TR
     ],
   },
 ]

@@ -9,7 +9,6 @@ const PRODUCT_LINKS = [
   { label: 'Piso Teto', href: '/produtos/piso-teto' },
   { label: 'Cassete', href: '/produtos/cassete' },
   { label: 'Mini VRF', href: '/produtos/mini-vrf' },
-  { label: 'Splitão', href: '/produtos/splitao' },
 ]
 
 export function Footer() {

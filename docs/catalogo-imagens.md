@@ -20,7 +20,7 @@ Todas as fotos dos aparelhos e logos estão presentes.
 - Mini VRF Gree: tem selo laranja "R410A / Inverter"
 - Logo Midea: tem fundo azul (o ideal é fundo transparente)
 
-Mini VRF e Splitão: a unidade externa sozinha é o padrão de mercado (a interna varia por projeto).
+Mini VRF: a unidade externa sozinha é o padrão de mercado (a interna varia por projeto).
 
 Coloque cada arquivo **exatamente** no caminho indicado. Não é preciso mexer no código: o site detecta o arquivo sozinho. Depois de adicionar as imagens, rode `npm run build` (ou reinicie o `npm run dev`).
 
@@ -32,7 +32,7 @@ Enquanto a imagem não existir, o site mostra a ilustração padrão (aparelho) 
 - **Logos:** `.svg` (preferido) ou `.png` com fundo transparente · versão colorida horizontal.
 - Use a imagem da unidade interna (evaporadora). Uma imagem por linha vale para todas as capacidades.
 
-## Aparelhos (19)
+## Aparelhos (18)
 
 | Tipo | Marca | Linha | Arquivo | Página de referência |
 |---|---|---|---|---|
@@ -55,9 +55,8 @@ Enquanto a imagem não existir, o site mostra a ilustração padrão (aparelho) 
 | Mini VRF | Midea | ATOM | `public/catalog/mini-vrf/midea.webp` | https://carrierdobrasil.com.br/blog/produtos/mini-vrf-atom-midea-carrier |
 | Mini VRF | LG | Multi V S | `public/catalog/mini-vrf/lg.webp` | https://www.lg.com/br/business/multi-v-s |
 | Mini VRF | Daikin | VRV S | `public/catalog/mini-vrf/daikin.webp` | https://www.daikin.com.br/produto/vrv-s-alta-eficiencia-sazonal |
-| Splitão | Elgin | Splitão | `public/catalog/splitao/elgin.webp` | https://elgin.com.br/ar-condicionado/ar-condicionado-splitao |
 
-> Para Mini VRF e Splitão, a imagem mais representativa é a da **unidade externa (condensadora)**.
+> Para Mini VRF, a imagem mais representativa é a da **unidade externa (condensadora)**.
 
 ## Logos (6)
 
@@ -76,6 +75,5 @@ Não encontramos linha atual no site oficial brasileiro para:
 
 - **Piso Teto:** LG, Samsung, Daikin
 - **Mini VRF:** Samsung, Elgin
-- **Splitão:** Gree, Midea, LG, Samsung, Daikin
 
 Se você trabalha com alguma dessas, envie o modelo que adicionamos ao catálogo.
