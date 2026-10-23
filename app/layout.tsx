@@ -15,7 +15,7 @@ const poppins = Poppins({
 })
 
 export const metadata: Metadata = {
-  title: 'Split House — Instalação e Manutenção de Ar Condicionado em Cascavel',
+  title: 'SplitHouse',
   description:
     'Mais de 13 anos instalando e mantendo sistemas de ar condicionado em Cascavel e região do Paraná. Atendimento direto, orçamento grátis.',
   keywords: 'ar condicionado, instalação, manutenção, split, Cascavel, Paraná',

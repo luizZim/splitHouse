@@ -21,7 +21,6 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { tipo } = await params
   const type = getType(tipo)
   return {
-    title: type ? `${type.label} — Split House` : 'Produto — Split House',
     description: type?.summary,
   }
 }

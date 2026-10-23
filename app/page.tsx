@@ -1,4 +1,3 @@
-import type { Metadata } from 'next'
 import { HeroSection } from '@/components/sections/HeroSection'
 import { StatsSection } from '@/components/sections/StatsSection'
 import { ServicesSection } from '@/components/sections/ServicesSection'
@@ -12,10 +11,6 @@ import { ServiceModalsProvider } from '@/components/services/ServiceModals'
 import { BRANDS, PRODUCT_TYPES } from '@/lib/data/catalog'
 import { withBrandLogos, withTypeCovers } from '@/lib/catalog/assets'
 import { scanGallery } from '@/lib/gallery/scan'
-
-export const metadata: Metadata = {
-  title: 'Split House — Instalação e Manutenção de Ar Condicionado em Cascavel',
-}
 
 export default function HomePage() {
   const gallery = scanGallery()
